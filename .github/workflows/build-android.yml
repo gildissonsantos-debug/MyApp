@@ -9,10 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ANDROID_HOME: ${{ github.workspace }}/android-sdk
-      ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
+      ANDROID_HOME: /opt/android-sdk
+      ANDROID_SDK_ROOT: /opt/android-sdk
     steps:
       - uses: actions/checkout@v4
+
+      - name: Clean old build caches
+        run: |
+          rm -rf .buildozer .p4a
 
       - name: Install system dependencies
         run: |
@@ -26,24 +30,31 @@ jobs:
 
       - name: Download Android SDK commandline tools
         run: |
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          cd $ANDROID_HOME/cmdline-tools
-          wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip -d tmp
-          mv tmp/cmdline-tools latest
-          rm -rf tmp
-          rm cmdline-tools.zip
+          sudo mkdir -p /opt/android-sdk/cmdline-tools
+          cd /opt/android-sdk/cmdline-tools
+          sudo wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+          sudo unzip cmdline-tools.zip -d tmp
+          sudo mv tmp/cmdline-tools latest
+          sudo rm -rf tmp
+          sudo rm cmdline-tools.zip
+          sudo chown -R $USER:$USER /opt/android-sdk
 
       - name: Install Android SDK Build Tools and Platform Tools
         run: |
-          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "build-tools;34.0.0" "platforms;android-33"
+          export PATH=/opt/android-sdk/cmdline-tools/latest/bin:$PATH
+          yes | sdkmanager --sdk_root=/opt/android-sdk --licenses
+          sdkmanager --sdk_root=/opt/android-sdk "platform-tools" "build-tools;34.0.0" "platforms;android-33"
+
+      - name: Debug SDK structure
+        run: |
+          ls -l /opt/android-sdk
+          ls -l /opt/android-sdk/cmdline-tools
+          ls -l /opt/android-sdk/cmdline-tools/latest
+          ls -l /opt/android-sdk/cmdline-tools/latest/bin
 
       - name: Build APK
         run: |
-          export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
-          cd ${{ github.workspace }}
+          export PATH=/opt/android-sdk/platform-tools:/opt/android-sdk/build-tools/34.0.0:/opt/android-sdk/cmdline-tools/latest/bin:$PATH
           buildozer -v android debug
 
       - name: Upload APK
