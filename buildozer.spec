@@ -77,16 +77,9 @@ osx.kivy_version = 1.9.1
 fullscreen = 0
 
 # (string) Presplash background color (for android toolchain)
-# Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
-# red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
-# darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
-# olive, purple, silver, teal.
 #android.presplash_color = #FFFFFF
 
 # (string) Presplash animation using Lottie format.
-# see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
-# for general documentation.
-# Lottie files can be created using various tools, like Adobe After Effect or Synfig.
 #android.presplash_lottie = "path/to/lottie/file.json"
 
 # (str) Adaptive icon of the application (used if Android API level is 26+ at runtime)
@@ -122,39 +115,30 @@ android.permissions = INTERNET
 #android.ndk_path =
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
-#android.sdk_path =
+android.sdk_path = ./android-sdk
 
 # (str) ANT directory (if empty, it will be automatically downloaded.)
 #android.ant_path =
 
 # (bool) If True, then skip trying to update the Android sdk
-# This can be useful to avoid excess Internet downloads or save time
-# when an update is due and you just want to test/build your package
 # android.skip_update = False
 
 # (bool) If True, then automatically accept SDK license
-# agreements. This is intended for automation only. If set to False,
-# the default, you will be shown the license when first running
-# buildozer.
 # android.accept_sdk_license = False
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.kivy.android.PythonActivity
 
 # (str) Full name including package path of the Java class that implements Android Activity
-# use that parameter together with android.entrypoint to set custom Java class instead of PythonActivity
 #android.activity_class_name = org.kivy.android.PythonActivity
 
 # (str) Extra xml to write directly inside the <manifest> element of AndroidManifest.xml
-# use that parameter to provide a filename from where to load your custom XML code
 #android.extra_manifest_xml = ./src/android/extra_manifest.xml
 
 # (str) Extra xml to write directly inside the <manifest><application> tag of AndroidManifest.xml
-# use that parameter to provide a filename from where to load your custom XML arguments:
 #android.extra_manifest_application_arguments = ./src/android/extra_manifest_application_arguments.xml
 
 # (str) Full name including package path of the Java class that implements Python Service
-# use that parameter to set custom Java class which extends PythonService
 #android.service_class_name = org.kivy.android.PythonService
 
 # (str) Android app theme, default is ok for Kivy-based app
@@ -183,21 +167,9 @@ android.permissions = INTERNET
 #android.add_aars =
 
 # (list) Put these files or directories in the apk assets directory.
-# Either form may be used, and assets need not be in 'source.include_exts'.
-# 1) android.add_assets = source_asset_relative_path
-# 2) android.add_assets = source_asset_path:destination_asset_relative_path
 #android.add_assets =
 
 # (list) Put these files or directories in the apk res directory.
-# The option may be used in three ways, the value may contain one or zero ':'
-# Some examples:
-# 1) A file to add to resources, legal resource names contain ['a-z','0-9','_']
-# android.add_resources = my_icons/all-inclusive.png:drawable/all_inclusive.png
-# 2) A directory, here  'legal_icons' must contain resources of one kind
-# android.add_resources = legal_icons:drawable
-# 3) A directory, here 'legal_resources' must contain one or more directories, 
-# each of a resource kind:  drawable, xml, etc...
-# android.add_resources = legal_resources
 #android.add_resources =
 
 # (list) Gradle dependencies to add
@@ -209,27 +181,18 @@ android.permissions = INTERNET
 #android.enable_androidx = True
 
 # (list) add java compile options
-# this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
-# see https://developer.android.com/studio/write/java8-support for further information
 # android.add_compile_options = "sourceCompatibility = 1.8", "targetCompatibility = 1.8"
 
 # (list) Gradle repositories to add {can be necessary for some android.gradle_dependencies}
-# please enclose in double quotes 
-# e.g. android.gradle_repositories = "maven { url 'https://kotlin.bintray.com/ktor' }"
 #android.add_gradle_repositories =
 
 # (list) packaging options to add 
-# see https://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.PackagingOptions.html
-# can be necessary to solve conflicts in gradle_dependencies
-# please enclose in double quotes 
-# e.g. android.add_packaging_options = "exclude 'META-INF/common.kotlin_module'", "exclude 'META-INF/*.kotlin_module'"
 #android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
 #android.add_activities = com.example.ExampleActivity
 
 # (str) OUYA Console category. Should be one of GAME or APP
-# If you leave this blank, OUYA support will not be enabled
 #android.ouya.category = GAME
 
 # (str) Filename of OUYA Console icon. It must be a 732x412 png image.
@@ -238,14 +201,13 @@ android.permissions = INTERNET
 # (str) XML file to include as an intent filters in <activity> tag
 #android.manifest.intent_filters =
 
-# (list) Copy these files to src/main/res/xml/ (used for example with intent-filters)
+# (list) Copy these files to src/main/res/xml/
 #android.res_xml = PATH_TO_FILE,
 
 # (str) launchMode to set for the main activity
 #android.manifest.launch_mode = standard
 
 # (str) screenOrientation to set for the main activity.
-# Valid values can be found at https://developer.android.com/guide/topics/manifest/activity-element
 #android.manifest.orientation = fullSensor
 
 # (list) Android additional libraries to copy into libs/armeabi
@@ -256,14 +218,12 @@ android.permissions = INTERNET
 #android.add_libs_mips = libs/android-mips/*.so
 
 # (bool) Indicate whether the screen should stay on
-# Don't forget to add the WAKE_LOCK permission if you set this to True
 #android.wakelock = False
 
 # (list) Android application meta-data to set (key=value format)
 #android.meta_data =
 
-# (list) Android library project to add (will be added in the
-# project.properties automatically.)
+# (list) Android library project to add
 #android.library_references =
 
 # (list) Android shared libraries which will be added to AndroidManifest.xml using <uses-library> tag
@@ -286,7 +246,6 @@ android.permissions = INTERNET
 android.archs = arm64-v8a, armeabi-v7a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
-# this is not the same as app version and should only be edited if you know what you're doing
 # android.numeric_version = 1
 
 # (bool) enables Android auto backup feature (Android API >=23)
@@ -342,10 +301,6 @@ android.allow_backup = True
 #p4a.port =
 
 # Control passing the --use-setup-py vs --ignore-setup-py to p4a
-# "in the future" --use-setup-py is going to be the default behaviour in p4a, right now it is not
-# Setting this to false will pass --ignore-setup-py, true will pass --use-setup-py
-# NOTE: this is general setuptools integration, having pyproject.toml is enough, no need to generate
-# setup.py if you're using Poetry, but you need to add "toml" to source.include_exts.
 #p4a.setup_py = false
 
 # (str) extra command line arguments to pass when invoking pythonforandroid.toolchain
@@ -374,7 +329,6 @@ ios.ios_deploy_branch = 1.10.0
 ios.codesign.allowed = false
 
 # (str) Name of the certificate to use for signing the debug version
-# Get a list of available identities: buildozer ios list_identities
 #ios.codesign.debug = "iPhone Developer: <lastname> <firstname> (<hexstring>)"
 
 # (str) The development team to use for signing the debug version
@@ -387,17 +341,13 @@ ios.codesign.allowed = false
 #ios.codesign.development_team.release = <hexstring>
 
 # (str) URL pointing to .ipa file to be installed
-# This option should be defined along with `display_image_url` and `full_size_image_url` options.
 #ios.manifest.app_url =
 
 # (str) URL pointing to an icon (57x57px) to be displayed during download
-# This option should be defined along with `app_url` and `full_size_image_url` options.
 #ios.manifest.display_image_url =
 
 # (str) URL pointing to a large icon (512x512px) to be used by iTunes
-# This option should be defined along with `app_url` and `display_image_url` options.
 #ios.manifest.full_size_image_url =
-
 
 [buildozer]
 
