@@ -21,7 +21,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip python3-setuptools python3-wheel python3-venv git zip unzip openjdk-17-jdk autoconf automake libtool pkg-config libffi-dev libssl-dev
+          sudo apt-get install -y python3-pip python3-setuptools python3-wheel python3-venv git zip unzip openjdk-17-jdk autoconf automake libtool libltdl-dev pkg-config libffi-dev libssl-dev
 
       - name: Install pip dependencies
         run: |
@@ -51,7 +51,7 @@ jobs:
           mkdir -p /opt/android-sdk/tools/bin
           # Linka sdkmanager moderno no local legacy
           ln -sf /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager /opt/android-sdk/tools/bin/sdkmanager
-          # Opcional: linka também o avdmanager (resolve outros erros de tools/bin/avdmanager)
+          # Opcional: linka também o avdmanager
           ln -sf /opt/android-sdk/cmdline-tools/latest/bin/avdmanager /opt/android-sdk/tools/bin/avdmanager
           # Cria source.properties fake para scripts legacy
           echo "Pkg.Revision=26.1.1" > /opt/android-sdk/tools/source.properties
