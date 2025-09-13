@@ -45,11 +45,20 @@ jobs:
           yes | sdkmanager --sdk_root=/opt/android-sdk --licenses
           sdkmanager --sdk_root=/opt/android-sdk "platform-tools" "build-tools;34.0.0" "platforms;android-33"
 
+      - name: Shim legacy sdkmanager path
+        run: |
+          # Cria diretório legacy
+          mkdir -p /opt/android-sdk/tools/bin
+          # Linka sdkmanager moderno no local legacy
+          ln -sf /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager /opt/android-sdk/tools/bin/sdkmanager
+          # Opcional: linka também o avdmanager (resolve outros erros de tools/bin/avdmanager)
+          ln -sf /opt/android-sdk/cmdline-tools/latest/bin/avdmanager /opt/android-sdk/tools/bin/avdmanager
+          # Cria source.properties fake para scripts legacy
+          echo "Pkg.Revision=26.1.1" > /opt/android-sdk/tools/source.properties
+
       - name: Debug SDK structure
         run: |
-          ls -l /opt/android-sdk
-          ls -l /opt/android-sdk/cmdline-tools
-          ls -l /opt/android-sdk/cmdline-tools/latest
+          ls -l /opt/android-sdk/tools/bin
           ls -l /opt/android-sdk/cmdline-tools/latest/bin
 
       - name: Build APK
