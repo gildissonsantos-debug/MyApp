@@ -36,12 +36,14 @@ jobs:
 
       - name: Install Android SDK Build Tools and Platform Tools
         run: |
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "build-tools;34.0.0" "platforms;android-33"
 
       - name: Build APK
         run: |
-          export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$PATH
+          export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+          cd ${{ github.workspace }}
           buildozer -v android debug
 
       - name: Upload APK
