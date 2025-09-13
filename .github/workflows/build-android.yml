@@ -16,20 +16,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-setuptools python3-wheel python3-venv git zip unzip openjdk-17-jdk autoconf automake libtool pkg-config libffi-dev libssl-dev
+
+      - name: Install pip dependencies
+        run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install buildozer cython==0.29.36
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android Build Tools
+      - name: Accept licenses and install Build Tools
         run: |
           yes | sdkmanager --licenses
-          sdkmanager "build-tools;34.0.0"
+          sdkmanager "platform-tools" "platforms;android-33" "build-tools;34.0.0"
 
       - name: Build APK
         run: |
