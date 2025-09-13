@@ -1,0 +1,173 @@
+#:import Window kivy.core.window.Window
+
+ScreenManager:
+    id: screen_manager
+
+    Screen:
+        name: "login"
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: "30dp"
+            spacing: "20dp"
+            md_bg_color: 0.09, 0.12, 0.16, 1
+
+            MDLabel:
+                text: "Coloque as suas credenciais"
+                halign: "center"
+                font_style: "H5"
+                font_size: "18sp"
+
+            MDTextField:
+                id: api_id
+                hint_text: "API ID"
+                font_size: "14sp"
+
+            MDTextField:
+                id: api_hash
+                hint_text: "API Hash"
+                font_size: "14sp"
+
+            MDRaisedButton:
+                text: "Continuar"
+                pos_hint: {"center_x": .5}
+                font_size: "14sp"
+                on_release: app.goto_phone_screen()
+
+    Screen:
+        name: "phone_screen"
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "20dp"
+            padding: "30dp"
+            md_bg_color: 0.11, 0.15, 0.19, 1
+
+            MDLabel:
+                text: "Digite seu telefone (ex: +5511999999999)"
+                halign: "center"
+                font_size: "16sp"
+
+            MDTextField:
+                id: phone_input
+                hint_text: "Telefone com DDI"
+                font_size: "14sp"
+
+            MDRaisedButton:
+                text: "Enviar Código"
+                pos_hint: {"center_x": .5}
+                font_size: "14sp"
+                on_release: app.send_code()
+
+    Screen:
+        name: "code_screen"
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "20dp"
+            padding: "30dp"
+            md_bg_color: 0.12, 0.12, 0.18, 1
+
+            MDLabel:
+                text: "Digite o código recebido no Telegram ou por SMS"
+                halign: "center"
+                font_size: "16sp"
+
+            MDTextField:
+                id: code_input
+                hint_text: "Código recebido"
+                font_size: "14sp"
+
+            MDRaisedButton:
+                text: "Confirmar"
+                pos_hint: {"center_x": .5}
+                font_size: "14sp"
+                on_release: app.confirmar_codigo()
+
+    Screen:
+        name: "bot_screen"
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "20dp"
+            padding: "30dp"
+            md_bg_color: 0.09, 0.13, 0.18, 1
+
+            MDLabel:
+                text: "Qual o nome do bot?"
+                halign: "center"
+                font_size: "16sp"
+
+            MDTextField:
+                id: bot_input
+                hint_text: "Digite o nome do bot (ex: @meu_bot)"
+                font_size: "14sp"
+
+            MDRaisedButton:
+                text: "Confirmar"
+                pos_hint: {"center_x": .5}
+                font_size: "14sp"
+                on_release: app.confirmar_bot()
+
+    Screen:
+        name: "chat"
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "10dp"
+            padding: "0dp"
+            md_bg_color: 0.07, 0.11, 0.15, 1
+            size_hint_y: None
+            height: Window.height
+
+            MDTopAppBar:
+                id: top_app_bar
+                title: "Meu Bot"
+                elevation: 4
+                pos_hint: {"top": 1}
+                md_bg_color: 0.12, 0.16, 0.22, 1
+                left_action_items: []
+
+            MDLabel:
+                id: bot_label
+                text: "Bot: "
+                size_hint_y: None
+                font_style: "Subtitle1"
+                opacity: 0
+                font_size: "14sp"
+
+            ScrollView:
+                id: scroll_chat
+                bar_width: "8dp"
+                scroll_wheel_distance: 80
+                do_scroll_x: False
+
+                MDBoxLayout:
+                    id: chat_layout
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+            BoxLayout:
+                size_hint_y: None
+                height: "54dp"
+                spacing: "6dp"
+                padding: "8dp", "8dp", "8dp", "8dp"
+
+                MDTextField:
+                    id: msg_input
+                    hint_text: "Digite o comando"
+                    size_hint_x: 0.5
+                    font_size: "14sp"
+                    mode: "rectangle"
+                    radius: [14, 14, 14, 14]
+
+                MDRaisedButton:
+                    text: "Enviar"
+                    size_hint_x: 0.25
+                    md_bg_color: 0.22, 0.80, 0.65, 1
+                    font_size: "14sp"
+                    on_release: app.send_message()
+
+                MDRaisedButton:
+                    text: "Copiar"
+                    size_hint_x: 0.25
+                    md_bg_color: 0.22, 0.80, 0.65, 1
+                    font_size: "14sp"
+                    on_release: app.copy_last_bot_message()
