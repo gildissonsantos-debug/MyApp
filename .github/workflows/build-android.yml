@@ -11,7 +11,6 @@ jobs:
     env:
       ANDROID_HOME: ${{ github.workspace }}/android-sdk
       ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk
-      PATH: ${{ github.workspace }}/android-sdk/platform-tools/:${{ github.workspace }}/android-sdk/build-tools/34.0.0/:${{ env.PATH }}
     steps:
       - uses: actions/checkout@v4
 
@@ -42,6 +41,7 @@ jobs:
 
       - name: Build APK
         run: |
+          export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$PATH
           buildozer -v android debug
 
       - name: Upload APK
